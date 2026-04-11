@@ -7,7 +7,10 @@ export default function HomeScreen(){
             <Text style={styles.title}>Avatar GSM App</Text>
             <Text style={styles.subtitle}>Startscherm</Text>
             <Pressable style={styles.button} onPress={() => router.navigate('/quiz')}>
-                <Text style={styles.buttonText}>Start Quiz</Text>
+              <Text style={styles.buttonText}>Start Quiz</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={() => router.navigate('/CharacterSelectionScreen')}>
+              <Text style={styles.buttonText}>Select Character</Text>
             </Pressable>
         </View>
     );
