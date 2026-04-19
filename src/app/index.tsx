@@ -1,20 +1,27 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 
-export default function HomeScreen(){
+const HomeScreen = () => {
     return(
         <View style={styles.container}>
+          <Stack.Screen options={{ title: "Avatar",  headerTitleAlign: "center" }} />
             <Text style={styles.title}>Avatar GSM App</Text>
             <Text style={styles.subtitle}>Startscherm</Text>
             <Pressable style={styles.button} onPress={() => router.navigate('/quiz')}>
               <Text style={styles.buttonText}>Start Quiz</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => router.navigate('/CharacterSelectionScreen')}>
+            <Pressable style={styles.button} onPress={() => router.navigate('/characters')}>
               <Text style={styles.buttonText}>Select Character</Text>
             </Pressable>
+            <Pressable style={styles.button} onPress={() => router.navigate('/episodes')}>
+              <Text style={styles.buttonText}>Select Episode</Text>
+            </Pressable>
+
         </View>
     );
 }
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {

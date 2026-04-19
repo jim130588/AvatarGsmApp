@@ -1,12 +1,5 @@
-import React from 'react';
 import { Text, Image, StyleSheet, Pressable } from 'react-native';
-
-export type Character = {
-    id: number;
-    name: string;
-    image: string;
-    nationality: string;
-};
+import { Character } from "../types/character";
 
 type CardSelectionCardProps = {
     character: Character;
@@ -40,6 +33,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 150,
+    resizeMode: "cover",
     marginBottom: 10,
   },
   name: {

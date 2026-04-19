@@ -2,7 +2,11 @@ import { Character } from "../types/character";
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
-const CardDetailsCard = ({ character }: { character: Character }) => {
+const renderList = (items?: string[]) => {
+  return items && items.length > 0 ? items.join(", ") : "NA";
+};
+
+const CharacterDetailsCard = ({ character }: { character: Character }) => {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -18,22 +22,22 @@ const CardDetailsCard = ({ character }: { character: Character }) => {
                     <Text style={styles.item}><Text style={styles.label}>Skin Color:</Text> {character.skinColor}</Text>
 
                     <Text style={styles.item}>
-                        <Text style={styles.label}>Allies:</Text> {character.allies.join(', ')}
+                        <Text style={styles.label}>Allies:</Text> {renderList(character.allies)}
                     </Text>
                     <Text style={styles.item}>
-                        <Text style={styles.label}>Enemies:</Text> {character.enemies.join(', ')}
+                        <Text style={styles.label}>Enemies:</Text> {renderList(character.enemies)}
                     </Text>
                     <Text style={styles.item}>
-                        <Text style={styles.label}>Weapons:</Text> {character.weaponOfChoice.join(', ')}
+                        <Text style={styles.label}>Weapons:</Text> {renderList(character.weaponOfChoice)}
                     </Text>
                     <Text style={styles.item}>
-                        <Text style={styles.label}>Fighting Styles:</Text> {character.fightingStyles.join(', ')}
+                        <Text style={styles.label}>Fighting Styles:</Text> {renderList(character.fightingStyles)}
                     </Text>
                     <Text style={styles.item}>
                         <Text style={styles.label}>First Appearance:</Text> {character.firstAppearance}
                     </Text>
                     <Text style={styles.item}>
-                        <Text style={styles.label}>Voice Actors:</Text> {character.voiceActors.join(', ')}
+                        <Text style={styles.label}>Voice Actors:</Text> {renderList(character.voiceActors)}
                     </Text>
                 </View>
             </View>
@@ -41,7 +45,8 @@ const CardDetailsCard = ({ character }: { character: Character }) => {
     )
 }
 
-export default CardDetailsCard;
+
+export default CharacterDetailsCard;
 
 const styles = StyleSheet.create({
   screen: {

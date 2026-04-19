@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 
-export default function QuizScreen() {
+const QuizScreen = () => {
     return (
         <View style={styles.container}>
+          <Stack.Screen options={{ title: "Quiz",  headerTitleAlign: "center" }} />
             <Text style={styles.title}>Quiz Screen</Text>
             <Pressable style={styles.button} onPress={() => router.back()}>
                 <Text style={styles.buttonText}>Go Back</Text>
@@ -11,6 +12,8 @@ export default function QuizScreen() {
         </View>
     );
 }
+
+export default QuizScreen;
 
 const styles = StyleSheet.create({
   container: {

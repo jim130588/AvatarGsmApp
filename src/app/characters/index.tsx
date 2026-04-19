@@ -1,8 +1,9 @@
 import React, {useEffect, useMemo, useState} from "react";
 import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
-import CardSelectionCard, { Character } from "../components/CardSelectionCard";
-import { fetchCharacters } from "../services/characterService";
-import { router } from 'expo-router';
+import CardSelectionCard from "../../components/CardSelectionCard";
+import { fetchCharacters } from "../../services/characterService";
+import { Character } from "../../types/character";
+import { router, Stack } from 'expo-router';
 
 const CharacterSelectionScreen = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
@@ -28,13 +29,6 @@ const CharacterSelectionScreen = () => {
 
     loadCharacters();
     }, []);
-
-
-    // unieke nationalities
-    const nationalities = useMemo(() => {
-        const nations = characters.map((c)=> c.nationality);
-        return ["All", ...Array.from(new Set(nations))];
-    }, [characters]);
 
     // filtering + sorting
     const filteredCharacters = useMemo(() => {
@@ -75,6 +69,7 @@ const CharacterSelectionScreen = () => {
 
     return (
     <View style={styles.container}>
+      <Stack.Screen options={{ title: "Select Character" ,headerTitleAlign: "center"}} />
       <Text style={styles.title}>Select Your Character</Text>
 
       <TextInput
@@ -122,7 +117,15 @@ const CharacterSelectionScreen = () => {
           <View style={styles.cardWrapper}>
             <CardSelectionCard
               character={item}
-              onPress={() => router.push(`/character/${item.id}`)}
+              onPress={() =>
+                router.push({
+                  pathname: "/characters/[id]",
+                  params: {
+                    id: item.id.toString(),
+                    character: JSON.stringify(item),
+                  },
+                })
+              }
             />
           </View>
         )}
