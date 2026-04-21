@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
-import CardSelectionCard from "../../components/CardSelectionCard";
+import CarSelectionCard from "../../components/CarSelectionCard";
 import { fetchCharacters } from "../../services/characterService";
 import { Character } from "../../types/character";
 import { router, Stack } from 'expo-router';
@@ -115,7 +115,7 @@ const CharacterSelectionScreen = () => {
         numColumns={2}
         renderItem={({ item }) => (
           <View style={styles.cardWrapper}>
-            <CardSelectionCard
+            <CarSelectionCard
               character={item}
               onPress={() =>
                 router.push({

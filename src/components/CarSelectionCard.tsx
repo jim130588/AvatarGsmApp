@@ -1,12 +1,12 @@
 import { Text, Image, StyleSheet, Pressable } from 'react-native';
 import { Character } from "../types/character";
 
-type CardSelectionCardProps = {
+type CarSelectionCardProps = {
     character: Character;
     onPress?: () => void;
 };
 
-const CardSelectionCard = ({ character, onPress}: CardSelectionCardProps) => {
+const CardSelectionCard = ({ character, onPress}: CarSelectionCardProps) => {
     return (
         <Pressable onPress={onPress} style={({pressed})=>[styles.card, pressed && {opacity: 0.8, transform: [{scale: 0.98}]}]}>
             <Image source={{ uri: character.image }} style={styles.image} />
