@@ -1,8 +1,12 @@
-import {View, Text, StyleSheet, Pressable, TextInput, Image, Alert, ActivityIndicator, FlatList} from 'react-native';
-import react, {useState , useEffect} from 'react';
+import {View, Text, StyleSheet, Pressable, TextInput, Image, Alert, ActivityIndicator, FlatList, ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useState , useEffect} from 'react';
 import { router, Stack } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { Character } from '../../types/character';
+
+const PLAYER_NAME_KEY = 'playerName';
+const PLAYER_AVATAR_KEY = 'playerAvatarUri';
 
 const QuizScreen = () => {
   const [name , setName] =  useState("");
@@ -59,7 +63,7 @@ const QuizScreen = () => {
     setPhotoUri(character.image);
   };
 
-  const handleStart = () => {
+  const handleStart = async () => {
     if (!name.trim()) {
       Alert.alert('Naam ontbreekt', 'Vul eerst je naam in.');
       return;
@@ -70,17 +74,13 @@ const QuizScreen = () => {
       return;
     }
 
-    router.push({
-      pathname: '/quiz/questions',
-      params: {
-        name,
-        photoUri,
-        characterId: selectedCharacter ? String(selectedCharacter.id) : '',
-        characterName: selectedCharacter?.name ?? '',
-        source: selectedCharacter ? 'character' : 'camera',
-      },
-    });
-  };
+  await AsyncStorage.setItem(PLAYER_NAME_KEY, name.trim());
+  await AsyncStorage.setItem(PLAYER_AVATAR_KEY, photoUri);
+
+  router.push({
+    pathname: '/quiz/questions',
+  });
+};
 
   const renderCharacter = ({ item }: { item: Character }) => {
     const isSelected = selectedCharacter?.id === item.id;
@@ -100,7 +100,8 @@ const QuizScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+  style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
       <Stack.Screen
         options={{
           title: 'Quiz',
@@ -164,7 +165,7 @@ const QuizScreen = () => {
       <Pressable style={styles.startButton} onPress={handleStart}>
         <Text style={styles.startButtonText}>Start</Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -174,7 +175,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  contentContainer: {
     padding: 24,
+    paddingBottom: 40,
   },
   backButton: {
     alignSelf: 'flex-start',
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   startButton: {
-    marginTop: 'auto',
+    marginTop: 20,
     backgroundColor: '#111827',
     paddingHorizontal: 20,
     paddingVertical: 16,
