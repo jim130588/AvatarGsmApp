@@ -101,7 +101,9 @@ const QuizScreen = () => {
 
   return (
     <ScrollView
-  style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+      style={styles.container} 
+      contentContainerStyle={styles.contentContainer} 
+      showsVerticalScrollIndicator={false}>
       <Stack.Screen
         options={{
           title: 'Quiz',
@@ -111,6 +113,12 @@ const QuizScreen = () => {
 
       <Pressable style={styles.backButton} onPress={() => router.back()}>
         <Text style={styles.backButtonText}>Back</Text>
+      </Pressable>
+      <Pressable
+        style={styles.scoreboardButton}
+        onPress={() => router.push('/scoreboard')}
+        >
+          <Text style={styles.scoreboardButtonText}>Scoreboard</Text>
       </Pressable>
 
       <Text style={styles.title}>Start Quiz</Text>
@@ -285,5 +293,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '700',
     fontSize: 16,
+  },
+  scoreboardButton: {
+    marginTop: 12,
+    backgroundColor: '#e5e7eb',
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+
+  scoreboardButtonText: {
+    color: '#111827',
+    fontWeight: '600',
   },
 });

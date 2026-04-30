@@ -1,5 +1,5 @@
 export type Score = {
-  _id?: string;
+  id?: number;
   name: string;
   score: number;
   timeInSeconds: number;

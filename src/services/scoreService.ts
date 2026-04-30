@@ -1,29 +1,45 @@
+import { supabase } from '../lib/supabase';
 import {Score} from '../types/score';
 
-const API_URL = 'https://your-api-url.com/scores';
-
 export const fetchScores = async (): Promise<Score[]> => {
-  const response = await fetch(API_URL);
+  const {data, error} = await supabase
+    .from('scores')
+    .select('*')
+    .order('score', { ascending: false })
+    .order('time_in_seconds', { ascending: true });
 
-  if (!response.ok) {
-    throw new Error('Scores konden niet geladen worden.');
+  if (error) {
+    throw error;
   }
-
-  return response.json();
+  
+  return data.map((item)=> ({
+    id: item.id,
+    name: item.name,
+    score: item.score,
+    timeInSeconds: item.time_in_seconds,
+    createdAt: item.created_at,
+  }));
 };
 
 export const createScore = async (score: Score): Promise<Score> => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(score),
-  });
-
-  if (!response.ok) {
-    throw new Error('Score kon niet opgeslagen worden.');
+  const { data, error } = await supabase
+    .from('scores')
+    .insert({
+      name: score.name,
+      score: score.score,
+      time_in_seconds: score.timeInSeconds,
+    })
+    .select()
+    .single();
+  if (error) {
+    throw error;
   }
 
-  return response.json();
+  return {
+    id: data.id,
+    name: data.name,
+    score: data.score,
+    timeInSeconds: data.time_in_seconds,
+    createdAt: data.created_at,
+  };
 };

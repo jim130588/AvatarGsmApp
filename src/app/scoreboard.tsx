@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, Alert} from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, router  } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ScoreCard from '../components/ScoreCard';
@@ -73,10 +73,16 @@ const showPersonalScore = params.justPlayed === 'true' && !!params.score && !!pa
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'Scoreboard',
-          headerTitleAlign: 'center',
-        }}
-      />
+        title: 'Scoreboard',
+        headerTitleAlign: 'center',
+        headerBackVisible: false,
+        headerLeft: () => (
+      <Text onPress={() => router.replace('/')}>
+        Home
+      </Text>
+    ),
+  }}
+/>
 
       {showPersonalScore ? (
         <View style={styles.personalScoreBox}>
@@ -92,7 +98,7 @@ const showPersonalScore = params.justPlayed === 'true' && !!params.score && !!pa
 
       <FlatList
         data={scores}
-        keyExtractor={(item, index) => item._id ?? index.toString()}
+        keyExtractor={(item, index) =>item.id ? item.id.toString() : index.toString()}
         renderItem={({ item, index }) => {
           const isCurrentPlayer =
             item.name.trim().toLowerCase() ===
